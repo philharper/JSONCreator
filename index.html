@@ -1,17 +1,69 @@
 <!DOCTYPE html>
-<html ng-app>
-<head>
-    <title>Hello World, AngularJS - ViralPatel.net</title>
-    <script type="text/javascript"
-        src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
- 
-</head>
-<body>
-     
-    Write some text in textbox:
-    <input type="text" ng-model="sometext" />
- 
-    <h1 ng-show="sometext">Hello {{ sometext }}</h1>
-     
-</body>
+<html ng-app="myApp">
+	<head>
+	    <title>Hello World, AngularJS - ViralPatel.net</title>
+	    <script type="text/javascript"
+	        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	        <script type="text/javascript"
+	        src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>	        
+		<link rel="stylesheet" type="text/css" href="style.css">
+	 	<script>
+	 	var app = angular.module('myApp', []);
+		app.controller('myController', ['$scope','$compile', function($scope, $compile) {
+
+			$scope.greeting = "Hello World!";
+			$count = 1;			
+			$layer = 0;	
+
+			$scope.addNode = function() {
+				$('#node' + $count + 'Json').append('<span>,</span>');
+
+				$count++;
+				$TextBoxMargin = $layer * 184;
+				$JsonMargin = $("node" + $count + "JsonKey").width();
+
+				var newTextBoxNode = angular.element('<div id="node' + $count + '"><input id="node' + $count + 'Key" type="text" ng-model="node' + $count + 'Key" class="nodeKey nodeKeyLayer' + $layer + '" style="margin-left:' + $TextBoxMargin + 'px"/><input id="node' + $count + 'Value" type="text" ng-model="node' + $count + 'Value" class="nodeValue" /></div>');
+				$("#nodes").append(newTextBoxNode); 
+				$compile(newTextBoxNode)($scope);
+
+				var newJsonNode = angular.element('<p id="node' + $count + 'Json" class="nodeJsonLayer' + $layer + '" ng-show="node' + $count + 'Key" class="JsonNode"><span id="node' + $count + 'JsonKey" style="margin-left:' + $JsonMargin + 'px">"{{ node' + $count + 'Key }}"</span> : <span id="node' + $count + 'JsonValue">"{{ node' + $count + 'Value }}"</span></p>');
+				$("#json").append(newJsonNode); 
+				$compile(newJsonNode)($scope);
+    		};
+
+    		$scope.addObject = function() {
+				$('#node' + $count + 'Value').remove();
+				$('#node' + $count + 'JsonValue').remove();
+				$('#node' + $count + 'Json').append("{");
+
+				$count++;
+				$layer++;
+
+				$scope.addNode(); 
+    		};
+
+    		$scope.closeObject = function() {
+    			$layer--;
+    			$('#json').append('<p class="closingObject">}</p>');
+    		};
+
+			$scope.addNode();    		
+		}]);		
+	 	</script>
+	</head>
+	<body ng-controller="myController">	
+		<div id="leftDiv">
+			<div id="nodes">
+			</div>
+			<button ng-click="addNode()">Add node</button>
+			<button ng-click="addObject()">Add object</button>
+			<button ng-click="closeObject()">Close object</button>
+		</div>
+		<div id="rightDiv">
+			<p>{</p>
+			<div id="json">				
+			</div>
+			<p>}</p>
+		</div>
+	</body>	     
 </html>

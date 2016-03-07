@@ -1,0 +1,45 @@
+#leftDiv {
+	float: left;
+	width: 49%;
+	height: 1000px;
+	background-color: #FAFAFA;
+}
+
+#rightDiv {
+	float: right;
+	width: 49%;
+	height: 1000px;
+	background-color: #A9E2F3;
+}
+
+.JsonNode {
+	display: inline-block;
+}
+
+.nodeKey {
+	margin: 10px;
+}
+
+.nodeKeyLayer1 {
+ margin: 10px;
+}
+
+.nodeValue {
+
+}
+
+.nodeKeyLayer2 {
+	margin: 10px;
+}
+
+.nodeJsonLayer2 {
+	margin-left: 40px;
+}
+
+.closingObject {
+	margin-left: 40px;
+}
+
+p { 
+	margin: 0; 
+}
