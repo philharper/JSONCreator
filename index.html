@@ -7,6 +7,7 @@
 	        <script type="text/javascript"
 	        src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>	        
 		<link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	 	<script>
 	 	var app = angular.module('myApp', []);
 		app.controller('myController', ['$scope','$compile', function($scope, $compile) {
@@ -22,7 +23,7 @@
 				$TextBoxMargin = $layer * 184;
 				$JsonMargin = $("node" + $count + "JsonKey").width();
 
-				var newTextBoxNode = angular.element('<div id="node' + $count + '"><input id="node' + $count + 'Key" type="text" ng-model="node' + $count + 'Key" class="nodeKey nodeKeyLayer' + $layer + '" style="margin-left:' + $TextBoxMargin + 'px"/><input id="node' + $count + 'Value" type="text" ng-model="node' + $count + 'Value" class="nodeValue" /></div>');
+				var newTextBoxNode = angular.element('<div id="node' + $count + '"><input id="node' + $count + 'Key" type="text" ng-model="node' + $count + 'Key" class="nodeKey nodeKeyLayer' + $layer + '" style="margin-left:' + $TextBoxMargin + 'px"/><input id="node' + $count + 'Value" type="text" ng-model="node' + $count + 'Value" class="nodeValue" /><button id="deleteButton' + $count + '" type="button" class="btn btn-default" aria-label="Left Align" ng-click="deleteObject(' + $count + ')"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button></div>');
 				$("#nodes").append(newTextBoxNode); 
 				$compile(newTextBoxNode)($scope);
 
@@ -46,6 +47,13 @@
     			$layer--;
     			$('#json').append('<p class="closingObject">}</p>');
     		};
+            
+            $scope.deleteObject = function(nodeNumber) {
+                $('#node' + nodeNumber + 'Key').remove();
+                $('#node' + nodeNumber + 'Value').remove();
+                $('#node' + nodeNumber + 'Json').remove();  
+                $('#deleteButton' + nodeNumber).remove();     
+            };
 
 			$scope.addNode();    		
 		}]);		
